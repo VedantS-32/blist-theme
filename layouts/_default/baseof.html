@@ -1,4 +1,57 @@
 <!DOCTYPE html>
+<style>
+  .relative {
+    position: relative;
+  }
+
+  .scaled-image-container {
+    max-width: 100%; /* Set the maximum width as a percentage or a specific pixel value */
+    max-height: 100%; /* Set the maximum height as a pixel value */
+    overflow: hidden;
+  }
+
+  .scaled-image {
+    width: 50%;
+    height: 50%; /* Maintain the original aspect ratio */
+    display: block; /* Remove extra space under the image */
+  }
+
+  .cropped-image-container {
+    width: fit-content; /* Set the desired width */
+    height: 100%; /* Set the desired height */
+    overflow: hidden; /* Ensure that any overflow is hidden */
+  }
+
+  .cropped-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Use "cover" to crop the image while maintaining aspect ratio */
+  }
+
+  .gradient-overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(to right, #b83455 20%, #942fad9e 50%, #00000000 75%,#00000000 100%);
+  }
+
+  .fade-mask {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 60%; /* Adjust the width of the fade effect */
+    height: 100%;
+    background: linear-gradient(to right, rgba(255, 255, 255, 0), rgb(16, 231, 246));
+  }
+
+    .mySlides {
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+  }
+</style>
+
 <html lang="{{ .Lang }}" itemscope itemtype="http://schema.org/WebPage">
   {{- partial "head.html" . -}}
   <body class="dark:bg-gray-800 dark:text-white relative flex flex-col min-h-screen">
