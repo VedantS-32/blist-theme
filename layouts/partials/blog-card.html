@@ -1,8 +1,9 @@
+{{ $uniqueID := .Params.UniqueID }}
 <div class="p-0">
   <a href="{{ .Permalink }}">
     {{ if .Params.thumbnailArray }}
-      <div id="slideshowContainer" class="relative scaled-image-container">
-        <div id="imageContainer" class="scaled-image-container" class="fade-mask"></div>
+      <div class="relative scaled-image-container">
+        <div class="scaled-image-container fade-mask imageContainer_{{ $uniqueID }}"></div>
         <div class="gradient-overlay"></div>
         {{ if not (or (or .Site.Params.hideMeta .Params.hideMeta) false) }}
           <div class="absolute bottom-4 left-4 text-sm px-2 py-0.5">
@@ -14,48 +15,55 @@
       </div>
 
       <script>
-        var imageUrls = [
-          {{ range .Params.thumbnailArray }}
-            "{{ . }}",
-          {{ end }}
-        ];
-        var imageContainer = document.getElementById("imageContainer");
-        var slideIndex = 0;
+        document.addEventListener("DOMContentLoaded", function () {
+          var uniqueID = "{{ $uniqueID }}";
+          var imageUrls = [
+            {{ range .Params.thumbnailArray }}
+              "{{ . }}",
+            {{ end }}
+          ];
 
-        function showNextSlide() {
-          var slides = document.getElementsByClassName("mySlides");
-          for (var i = 0; i < slides.length; i++) {
-            slides[i].style.opacity = 0;
+          var imageContainers = document.querySelectorAll(".imageContainer_" + uniqueID);
+          var slideIndex = 0;
+
+          function showNextSlide() {
+            for (var i = 0; i < imageContainers.length; i++) {
+              var slides = imageContainers[i].getElementsByClassName("mySlides");
+              for (var j = 0; j < slides.length; j++) {
+                slides[j].style.opacity = 0;
+              }
+            }
+
+            slideIndex++;
+            if (slideIndex >= imageUrls.length) {
+              slideIndex = 0;
+            }
+
+            var imgElement = document.createElement("img");
+            imgElement.src = imageUrls[slideIndex];
+            imgElement.alt = "Image " + (slideIndex + 1);
+            imgElement.classList.add("scaled-image", "mySlides");
+            imgElement.style = "float: right";
+
+            for (var k = 0; k < imageContainers.length; k++) {
+              imageContainers[k].innerHTML = '';
+              imageContainers[k].appendChild(imgElement);
+            }
+
+            imgElement.offsetWidth;
+
+            imgElement.style.opacity = 1;
           }
 
-          slideIndex++;
-          if (slideIndex >= imageUrls.length) {
-            slideIndex = 0;
-          }
-
-          var imgElement = document.createElement("img");
-          imgElement.src = imageUrls[slideIndex];
-          imgElement.alt = "Image " + (slideIndex + 1);
-          imgElement.classList.add("scaled-image", "mySlides");
-          imgElement.style = "float: right";
-
-          imageContainer.innerHTML = ''; // Clear the container before appending a new image
-          imageContainer.appendChild(imgElement);
-
-          // Trigger reflow to apply transition
-          imgElement.offsetWidth;
-
-          imgElement.style.opacity = 1;
-        }
-
-        var slideshowInterval = setInterval(showNextSlide, 3000);
+          var slideshowInterval = setInterval(showNextSlide, 3000);
+        });
       </script>
     {{ end }}
   </a>
 
   {{ if not (or (or .Site.Params.hideOtherLanguages .Params.hideOtherLanguages) false) }}
     {{ if .IsTranslated -}}
-      <div style="font-style: italic;font-size: smaller;">
+      <div style="font-style: italic; font-size: smaller;">
         {{- $sortedTranslations := sort .Translations "Site.Language.Weight" -}}
         {{- $links := apply $sortedTranslations "partial" "translation_link.html" "." -}}
         {{- $cleanLinks := apply $links "chomp" "." -}}
