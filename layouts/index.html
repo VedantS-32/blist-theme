@@ -1,8 +1,25 @@
 {{ define "main" }}
   {{- partial "intro.html" . -}}
-  {{ $frontBundle := .Site.Params.frontBundle | default "blog" }}
+  <!-- {{ $frontBundle := .Site.Params.frontBundle | default "blog" }}
+  <h1> Ongoing Projects </h1>
+  {{ range first 6 (where .Site.RegularPages.ByDate.Reverse "Type" $frontBundle)  }}
   <div class="container p-0 grid grid-cols-1 lg:gap-0">
-    {{ range first 6 (where .Site.RegularPages.ByDate.Reverse "Type" $frontBundle)  }}
+      {{- partial "blog-card.html" . -}}
+    {{ end }}
+  </div> -->
+
+  {{ $ongoing := .Site.Params.ongoingProject | default "blog" }}
+  <h1> Ongoing Projects </h1>
+  {{ range first 6 (where .Site.RegularPages.ByDate.Reverse "Type" $ongoing)  }}
+  <div class="container p-0 grid grid-cols-1 lg:gap-0">
+      {{- partial "blog-card.html" . -}}
+    {{ end }}
+  </div>
+
+  {{ $artwork := .Site.Params.artworkHighlight | default "blog" }}
+  <h1> Artwork Highlights </h1>
+  {{ range first 6 (where .Site.RegularPages.ByDate.Reverse "Type" $artwork)  }}
+  <div class="container p-0 grid grid-cols-1 lg:gap-0">
       {{- partial "blog-card.html" . -}}
     {{ end }}
   </div>
