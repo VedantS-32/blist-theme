@@ -17,17 +17,17 @@
   </div>
 
   {{ $artwork := .Site.Params.artworkHighlight | default "blog" }}
-  <h1 class="text-2xl font-bold mb-4;" style="padding: 2%;"> Artwork Highlights </h1>
+  <h1 class="text-2xl font-bold mb-4;" style="padding: 2%;"> Artwork Gallery </h1>
   {{ range first 6 (where .Site.RegularPages.ByDate.Reverse "Type" $artwork)  }}
   <div class="container p-0 grid grid-cols-1 lg:gap-0">
       {{- partial "blog-card.html" . -}}
     {{ end }}
   </div>
 
-  {{ $pastProject := .Site.Params.pastProject | default "blog" }}
-  <h1 class="text-2xl font-bold mb-4;" style="padding: 2%;"> Past Projects </h1>
+  {{ $project := .Site.Params.project | default "blog" }}
+  <h1 class="text-2xl font-bold mb-4;" style="padding: 2%;"> Projects </h1>
   <div class="container p-6 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-8">
-    {{ range first 6 (where .Site.RegularPages.ByDate.Reverse "Type" $pastProject)  }}
+    {{ range first 6 (where .Site.RegularPages.ByDate.Reverse "Type" $project)  }}
       {{- partial "blog-card-original.html" . -}}
     {{ end }}
   </div>
