@@ -7,18 +7,18 @@
       {{- partial "blog-card.html" . -}}
     {{ end }}
   </div> -->
-
-  {{ $ongoing := .Site.Params.ongoingProject | default "blog" }}
-  <h1 class="text-2xl font-bold mb-4;" style="padding: 2%;"> Ongoing Projects </h1>
-  {{ range first 6 (where .Site.RegularPages.ByDate.Reverse "Type" $ongoing)  }}
+  
+  {{ $artwork := .Site.Params.artworkHighlight | default "blog" }}
+  <h1 class="text-2xl font-bold mb-4;" style="padding: 2%;"> Artwork Gallery </h1>
+  {{ range first 6 (where .Site.RegularPages.ByDate.Reverse "Type" $artwork)  }}
   <div class="container p-0 grid grid-cols-1 lg:gap-0">
       {{- partial "blog-card.html" . -}}
     {{ end }}
   </div>
 
-  {{ $artwork := .Site.Params.artworkHighlight | default "blog" }}
-  <h1 class="text-2xl font-bold mb-4;" style="padding: 2%;"> Artwork Gallery </h1>
-  {{ range first 6 (where .Site.RegularPages.ByDate.Reverse "Type" $artwork)  }}
+  {{ $ongoing := .Site.Params.ongoingProject | default "blog" }}
+  <h1 class="text-2xl font-bold mb-4;" style="padding: 2%;"> Ongoing Projects </h1>
+  {{ range first 6 (where .Site.RegularPages.ByDate.Reverse "Type" $ongoing)  }}
   <div class="container p-0 grid grid-cols-1 lg:gap-0">
       {{- partial "blog-card.html" . -}}
     {{ end }}
@@ -36,6 +36,14 @@
   <h1 class="text-2xl font-bold mb-4;" style="padding: 2%;"> Artwork Blogs </h1>
   <div class="container p-6 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-8">
     {{ range first 6 (where .Site.RegularPages.ByDate.Reverse "Type" $artworkBlog)  }}
+      {{- partial "blog-card-original.html" . -}}
+    {{ end }}
+  </div>
+
+  {{ $ICWBlogs := .Site.Params.ICW | default "blog" }}
+  <h1 class="text-2xl font-bold mb-4;" style="padding: 2%;"> In a Corner of the World Blogs </h1>
+  <div class="container p-6 mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-8">
+    {{ range first 6 (where .Site.RegularPages.ByDate.Reverse "Type" $ICWBlogs)  }}
       {{- partial "blog-card-original.html" . -}}
     {{ end }}
   </div>
