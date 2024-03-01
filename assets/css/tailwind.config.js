@@ -18,6 +18,12 @@ module.exports = {
   darkMode: "class",
   theme: {
     extend: {
+      colors: {
+        rose: {
+          300: '#fda4af',
+          400: '#fb7185',
+        },
+      },
       typography: (theme) => ({
         DEFAULT: {
           css: [
